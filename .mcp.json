@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "orca-guide": {
+      "command": "node",
+      "args": [
+        "mcp-server.mjs"
+      ]
+    }
+  }
+}

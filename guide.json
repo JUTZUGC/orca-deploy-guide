@@ -1,0 +1,103 @@
+{
+  "owner": "JUTZUGC",
+  "code": "JUTZUGC",
+  "project": {
+    "key": "orca",
+    "nameCn": "Orca",
+    "repoName": "orca-deploy-guide",
+    "oneLiner": "把多个 AI 编程 Agent 放进一个工作台的桌面应用",
+    "officialRepo": "https://github.com/stablyai/orca",
+    "officialDocs": "https://www.onorca.dev/docs",
+    "stars": "105k",
+    "license": "MIT",
+    "highlights": [
+      "支持的 Agent：Claude Code、Codex、Grok、Cursor、GitHub Copilot、OpenCode、Qwen Code、Kimi、Goose 等，终端里能跑的 CLI 都能接",
+      "并行方式：一个需求分给多个 Agent，各自独立 worktree，跑完对比结果再合并",
+      "额外能力：终端分屏、内置浏览器 / Design Mode、GitHub 与 Linear 任务、SSH 远程 worktree、CLI 脚本",
+      "平台：macOS（Intel / Apple Silicon）、Windows、Linux（AppImage / deb / rpm），另有 iOS / Android 配套 App"
+    ],
+    "mcpSupport": "Orca 本身不是 MCP server，也不强制 MCP；它运行的是你已有的 CLI 代理，MCP 能力由那些代理自己提供。本仓库的 MCP 只提供安装步骤、包选择与常见坑。",
+    "webuiUrl": "",
+    "adapterPorts": "",
+    "collectedAt": "2026-10-25",
+    "verification": [
+      [
+        "Windows 安装包下载并核对 SHA256 与 Release digest 一致（192.8 MB）",
+        "已验证 2026-10-25"
+      ],
+      [
+        "MCP 服务握手与工具列表（initialize / tools/list）",
+        "已验证 2026-10-25"
+      ],
+      [
+        "非目标宿主调用被拦截（HOST_NOT_ALLOWED）",
+        "已验证 2026-10-25"
+      ]
+    ],
+    "deploy": {
+      "type": "binary",
+      "steps": [
+        "BASE=https://github.com/stablyai/orca/releases/download/v1.4.240",
+        "if [ \"$(uname -s)\" = \"Darwin\" ]; then\n  if [ \"$(uname -m)\" = \"arm64\" ]; then PKG=orca-macos-arm64.dmg; SUM=6020a633e2f3775d77395f5a9703f9a11d31fbf0fe0afeab8dbed39e140fbe90; else PKG=orca-macos-x64.dmg; SUM=24ae4ded325e058edde6819bfe80f80f96fd478316c8eec8ee6307df77d3221f; fi\nelse\n  if [ \"$(uname -m)\" = \"aarch64\" ] || [ \"$(uname -m)\" = \"arm64\" ]; then PKG=orca-linux-arm64.AppImage; SUM=e93bfe0f0c8c18bfccd8b422f91baa174161e4f21194a035cc3c61a694a16371; else PKG=orca-linux.AppImage; SUM=fa9c96016487020ee51b2f889ae8495fc4934a3666ee9767532ff0457013b4be; fi\nfi",
+        "curl -fL -o \"$PKG\" \"$BASE/$PKG\"",
+        "if command -v sha256sum >/dev/null 2>&1; then echo \"$SUM  $PKG\" | sha256sum -c -; else echo \"$SUM  $PKG\" | shasum -a 256 -c -; fi",
+        "if [ \"$(uname -s)\" = \"Darwin\" ]; then open \"$PKG\"; else chmod +x \"$PKG\"; echo \"运行 ./$PKG 即可启动\"; fi"
+      ],
+      "stepsPs": [
+        "$exe = 'orca-windows-setup.exe'",
+        "curl.exe -L --fail -o $exe \"https://github.com/stablyai/orca/releases/download/v1.4.240/$exe\"",
+        "if ((Get-FileHash $exe -Algorithm SHA256).Hash.ToLower() -ne '868b7e54f412035f8e4ad73e842a8eda8919ee02b43a8b26a72aca44a5deefe6') { throw 'SHA256 校验失败，请重新下载' }",
+        "Write-Host 'SHA256 校验通过'",
+        "Start-Process -FilePath (Join-Path $PWD $exe)"
+      ],
+      "source": "https://github.com/stablyai/orca/releases/tag/v1.4.240"
+    },
+    "pitfalls": [
+      "Orca 不附带模型：先装好 Claude Code / Codex 等 CLI 并登录，再在 Orca 里选择它",
+      "macOS 首次打开若提示无法验证开发者：到「系统设置 → 隐私与安全性」点「仍要打开」",
+      "Windows 若弹出 SmartScreen：点「更多信息 → 仍要运行」",
+      "Linux 的 AppImage 要先 `chmod +x`；缺 FUSE 时可加 `--appimage-extract-and-run` 启动",
+      "手机端只是配套：必须和桌面端配对，不能单独使用",
+      "macOS 分 Intel 和 Apple Silicon 两个包，下错会打不开或明显变慢",
+      "项目几乎每天发版，遇到问题先确认是不是旧版本"
+    ]
+  },
+  "gate": {
+    "allow": [
+      "dumate"
+    ],
+    "label": "百度搭子",
+    "url": "https://www.dumate.cn/",
+    "guideUrl": "https://github.com/JUTZUGC/orca-deploy-guide",
+    "howToFix": [
+      "1. 打开 https://www.dumate.cn/ ，下载并安装「百度搭子」电脑端（Windows / macOS）",
+      "2. 用账号登录",
+      "3. 在对话窗口发送：你好，帮我从 github 部署 JUTZUGC/orca-deploy-guide 到我的电脑上",
+      "4. 部署完成后，在同一对话窗口里继续使用"
+    ],
+    "hint": "请改用「百度搭子」部署后再使用；本工具没有网页版入口。",
+    "onError": "allow"
+  },
+  "keywords": [
+    "Orca 安装教程",
+    "Orca AI IDE",
+    "Orca 多 Agent",
+    "Orca 下载",
+    "Claude Code 多开",
+    "Codex 并行",
+    "AI 编程工作台",
+    "Orca 中文教程",
+    "orca deploy guide",
+    "Orca macOS 安装"
+  ],
+  "topics": [
+    "ai-agents",
+    "agent-ide",
+    "orchestration",
+    "claude-code",
+    "codex",
+    "terminal",
+    "worktrees",
+    "electron"
+  ]
+}
