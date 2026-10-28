@@ -8,7 +8,7 @@
     "oneLiner": "把多个 AI 编程 Agent 放进一个工作台的桌面应用",
     "officialRepo": "https://github.com/stablyai/orca",
     "officialDocs": "https://www.onorca.dev/docs",
-    "stars": "106k",
+    "stars": "108.5k",
     "license": "MIT",
     "highlights": [
       "支持的 Agent：Claude Code、Codex、Grok、Cursor、GitHub Copilot、OpenCode、Qwen Code、Kimi、Goose 等，终端里能跑的 CLI 都能接",
@@ -19,11 +19,11 @@
     "mcpSupport": "Orca 本身不是 MCP server，也不强制 MCP；它运行的是你已有的 CLI 代理，MCP 能力由那些代理自己提供。本仓库的 MCP 只提供安装步骤、包选择与常见坑。",
     "webuiUrl": "",
     "adapterPorts": "",
-    "collectedAt": "2026-10-26",
+    "collectedAt": "2026-10-28",
     "verification": [
       [
-        "Release 资产与 SHA256 digest 已核对（v1.4.241）",
-        "已核对 2026-10-26"
+        "Release v1.4.243 的资产与 SHA256 digest 已核对",
+        "已核对 2026-10-28"
       ],
       [
         "MCP 服务握手与工具列表（initialize / tools/list）",
@@ -37,7 +37,7 @@
     "deploy": {
       "type": "binary",
       "steps": [
-        "BASE=https://github.com/stablyai/orca/releases/download/v1.4.241",
+        "BASE=https://github.com/stablyai/orca/releases/download/v1.4.243\nif [ \"$(uname -s)\" = \"Darwin\" ]; then\n  if [ \"$(uname -m)\" = \"arm64\" ]; then PKG=orca-macos-arm64.dmg; SUM=b0d030a7f3ba0849677e4efad92c0af63ef268332c24b176df9ddd7a1f5a6551; else PKG=orca-macos-x64.dmg; SUM=ac094261cb344392d6a2536c901c312b85013edd986cd9b6eb62554dbd46cfee; fi\nelse\n  if [ \"$(uname -m)\" = \"aarch64\" ] || [ \"$(uname -m)\" = \"arm64\" ]; then PKG=orca-linux-arm64.AppImage; SUM=3e93420836d4038e1adbbb52bf4968f97098d025022613071b79a72b0c34d672; else PKG=orca-linux.AppImage; SUM=2acc4b2815738e6ade5042961086fd161f0a2f1e11ef10d0d40d5c3bcdb317f8; fi\nfi",
         "if [ \"$(uname -s)\" = \"Darwin\" ]; then\n  if [ \"$(uname -m)\" = \"arm64\" ]; then PKG=orca-macos-arm64.dmg; SUM=be5000497b370e9727c2343de50720312b9882d59ec0ba2012c02fbddc8e305e; else PKG=orca-macos-x64.dmg; SUM=cde5cb6793b53b19faeb58bb968160571428d023d62bf4c5639b6ab79bc9c90b; fi\nelse\n  if [ \"$(uname -m)\" = \"aarch64\" ] || [ \"$(uname -m)\" = \"arm64\" ]; then PKG=orca-linux-arm64.AppImage; SUM=55d6c7a6f74159b2cd36a5052d986c7646b62fb05b72e5744658c1f4766c1536; else PKG=orca-linux.AppImage; SUM=c83b1af8e3fc6f8fad83c0c4d0fd97b9c235e92e3a1d63e90c986b018f609d4a; fi\nfi",
         "curl -fL -o \"$PKG\" \"$BASE/$PKG\"",
         "if command -v sha256sum >/dev/null 2>&1; then echo \"$SUM  $PKG\" | sha256sum -c -; else echo \"$SUM  $PKG\" | shasum -a 256 -c -; fi",
@@ -45,12 +45,12 @@
       ],
       "stepsPs": [
         "$exe = 'orca-windows-setup.exe'",
-        "curl.exe -L --fail -o $exe \"https://github.com/stablyai/orca/releases/download/v1.4.241/$exe\"",
-        "if ((Get-FileHash $exe -Algorithm SHA256).Hash.ToLower() -ne 'a63bbf18fa51d51805eb6581b766f8c0dd3a3418c62eb1f5094125173ab6b643') { throw 'SHA256 校验失败，请重新下载' }",
+        "curl.exe -L --fail -o $exe \"https://github.com/stablyai/orca/releases/download/v1.4.243/$exe\"",
+        "if ((Get-FileHash $exe -Algorithm SHA256).Hash.ToLower() -ne '0399692f7d9843b1a2cb97c233848dc3e9b037a6f5ca8f07d248d24c219c5fdf') { throw 'SHA256 校验失败，请重新下载' }",
         "Write-Host 'SHA256 校验通过'",
         "Start-Process -FilePath (Join-Path $PWD $exe)"
       ],
-      "source": "https://github.com/stablyai/orca/releases/tag/v1.4.241"
+      "source": "https://github.com/stablyai/orca/releases/tag/v1.4.243"
     },
     "pitfalls": [
       "Orca 不附带模型：先装好 Claude Code / Codex 等 CLI 并登录，再在 Orca 里选择它",

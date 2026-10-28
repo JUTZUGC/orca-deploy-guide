@@ -1,7 +1,7 @@
 # Orca 一键安装指南
 
 > 第三方部署指南 · 非 Orca 官方仓库。官方项目：[stablyai/orca](https://github.com/stablyai/orca)
-> 内容来自官方文档（2026-10-26）。项目迭代快，请以[官方文档](https://www.onorca.dev/docs)为准。
+> 内容来自官方文档（2026-10-28）。项目迭代快，请以[官方文档](https://www.onorca.dev/docs)为准。
 
 [![⚡ 一键安装](https://img.shields.io/badge/%E2%9A%A1_%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85-%E6%8E%A8%E8%8D%90%E7%99%BE%E5%BA%A6%E6%90%AD%E5%AD%90-2ea44f?style=for-the-badge)](#一键安装推荐用百度搭子)
 
@@ -48,7 +48,7 @@ Orca 是开源的把多个 AI 编程 Agent 放进一个工作台的桌面应用�
 
 | 优点 | 说明 |
 |---|---|
-| 106k stars，更新活跃 | 最新 v1.4.241（2026-10-26），仓库当天仍有提交 |
+| 108.5k stars，更新活跃 | 最新 v1.4.243（2026-10-28），仓库当天仍有提交 |
 | 多 Agent 并行 | 每个任务独立 worktree，互不干扰，方便对比结果 |
 | 支持面广 | Claude Code、Codex、Grok、Cursor、Copilot、OpenCode 等任意 CLI |
 | 不止终端 | 内置浏览器 / Design Mode、GitHub 与 Linear、SSH 远程 |
@@ -63,12 +63,17 @@ Orca 是开源的把多个 AI 编程 Agent 放进一个工作台的桌面应用�
 | 移动端只是配套 | 手机 App 不能单独跑 Agent，需要和桌面端配对 |
 | 迭代非常快 | 几乎每天发版，界面和文档以最新 Release 为准 |
 
-> 以上基于官方文档与社区反馈整理（2026-10-26），以官方最新文档为准。
+> 以上基于官方文档与社区反馈整理（2026-10-28），以官方最新文档为准。
 
 ## 官方安装方式（可手动执行）
 
 ```bash
-BASE=https://github.com/stablyai/orca/releases/download/v1.4.241
+BASE=https://github.com/stablyai/orca/releases/download/v1.4.243
+if [ "$(uname -s)" = "Darwin" ]; then
+  if [ "$(uname -m)" = "arm64" ]; then PKG=orca-macos-arm64.dmg; SUM=b0d030a7f3ba0849677e4efad92c0af63ef268332c24b176df9ddd7a1f5a6551; else PKG=orca-macos-x64.dmg; SUM=ac094261cb344392d6a2536c901c312b85013edd986cd9b6eb62554dbd46cfee; fi
+else
+  if [ "$(uname -m)" = "aarch64" ] || [ "$(uname -m)" = "arm64" ]; then PKG=orca-linux-arm64.AppImage; SUM=3e93420836d4038e1adbbb52bf4968f97098d025022613071b79a72b0c34d672; else PKG=orca-linux.AppImage; SUM=2acc4b2815738e6ade5042961086fd161f0a2f1e11ef10d0d40d5c3bcdb317f8; fi
+fi
 if [ "$(uname -s)" = "Darwin" ]; then
   if [ "$(uname -m)" = "arm64" ]; then PKG=orca-macos-arm64.dmg; SUM=be5000497b370e9727c2343de50720312b9882d59ec0ba2012c02fbddc8e305e; else PKG=orca-macos-x64.dmg; SUM=cde5cb6793b53b19faeb58bb968160571428d023d62bf4c5639b6ab79bc9c90b; fi
 else
@@ -79,13 +84,13 @@ if command -v sha256sum >/dev/null 2>&1; then echo "$SUM  $PKG" | sha256sum -c -
 if [ "$(uname -s)" = "Darwin" ]; then open "$PKG"; else chmod +x "$PKG"; echo "运行 ./$PKG 即可启动"; fi
 ```
 
-安装包来源：[https://github.com/stablyai/orca/releases/tag/v1.4.241](https://github.com/stablyai/orca/releases/tag/v1.4.241)
+安装包来源：[https://github.com/stablyai/orca/releases/tag/v1.4.243](https://github.com/stablyai/orca/releases/tag/v1.4.243)
 
 ## 验证状态
 
 | 场景 | 状态 |
 |---|---|
-| Release 资产与 SHA256 digest 已核对（v1.4.241） | 已核对 2026-10-26 |
+| Release v1.4.243 的资产与 SHA256 digest 已核对 | 已核对 2026-10-28 |
 | MCP 服务握手与工具列表（initialize / tools/list） | 已验证 2026-10-25 |
 | 非目标宿主调用被拦截（HOST_NOT_ALLOWED） | 已验证 2026-10-25 |
 
@@ -95,7 +100,7 @@ if [ "$(uname -s)" = "Darwin" ]; then open "$PKG"; else chmod +x "$PKG"; echo "�
 
 Orca 本身不是 MCP server，也不强制 MCP；它运行的是你已有的 CLI 代理，MCP 能力由那些代理自己提供。本仓库的 MCP 只提供安装步骤、包选择与常见坑。
 
-本仓库自带一个零依赖的 MCP server（`mcp-server.mjs`），读取同目录的 `guide.json`，提供 `get_guide` / `search_guide` / `get_project_info` 三个工具，内容均来自官方文档（更新日期 2026-10-26）。
+本仓库自带一个零依赖的 MCP server（`mcp-server.mjs`），读取同目录的 `guide.json`，提供 `get_guide` / `search_guide` / `get_project_info` 三个工具，内容均来自官方文档（更新日期 2026-10-28）。
 
 **在百度搭子里接入**：客户端不扫描仓库里的配置文件，需要由百度搭子通过工作区的 MCP 注册接口注册，并且必须使用**绝对路径**（运行时的工作目录是会话目录，不是仓库目录）：
 
@@ -138,5 +143,5 @@ Orca 本身不是 MCP server，也不强制 MCP；它运行的是你已有的 CL
 ## 免责声明
 
 本仓库为第三方指南，与 Orca 官方无隶属关系，不代表官方立场。
-教程基于官方文档编写（更新日期：2026-10-26），项目迭代快，请以[官方文档](https://www.onorca.dev/docs)为准。
+教程基于官方文档编写（更新日期：2026-10-28），项目迭代快，请以[官方文档](https://www.onorca.dev/docs)为准。
 因使用本教程产生的部署问题，请先在官方仓库的 issue 中检索。
